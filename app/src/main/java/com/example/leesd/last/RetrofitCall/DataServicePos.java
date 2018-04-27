@@ -8,6 +8,7 @@ import java.util.Map;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -24,7 +25,7 @@ public interface DataServicePos {
 
     // category is setting of result format whether many places in rough or one place in detail.
     // options are query values for GET request
-    Call<PosMainInfo> DataPos(
+    Call<String> DataPos(
             @QueryMap Map<String, String> options
     );
 
@@ -32,6 +33,7 @@ public interface DataServicePos {
     // base url for request
     public static final Retrofit dataService = new Retrofit.Builder()
             .baseUrl("http://ws.bus.go.kr/api/rest/")
-            .addConverterFactory(SimpleXmlConverterFactory.create())
+            //.addConverterFactory(SimpleXmlConverterFactory.create())
+            .addConverterFactory(ScalarsConverterFactory.create())
             .build();
 }

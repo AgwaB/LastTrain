@@ -13,15 +13,15 @@ import retrofit2.Response;
  * Created by leesd on 2018-04-08.
  */
 
-public class DataServicePosNetworkCall extends AsyncTask<Call, Void, Response<PosMainInfo>> {
+public class DataServicePosNetworkCall extends AsyncTask<Call, Void, Response<String>> {
     public AsyncResponseMaps delegate = null;
     @Override
-    protected Response<PosMainInfo> doInBackground(Call... params){
+    protected Response<String> doInBackground(Call... params){
         // execute thread for background http call
         try {
 
-            Call<PosMainInfo> call = params[0]; // get call params
-            Response<PosMainInfo> response = call.execute(); // execute call
+            Call<String> call = params[0]; // get call params
+            Response<String> response = call.execute(); // execute call
 
             return response;
 
@@ -35,7 +35,7 @@ public class DataServicePosNetworkCall extends AsyncTask<Call, Void, Response<Po
 
 
     @Override
-    protected void onPostExecute(Response<PosMainInfo> response){
+    protected void onPostExecute(Response<String> response){
         // call if doInBackground returns response or null
 
         // send a response object to activity

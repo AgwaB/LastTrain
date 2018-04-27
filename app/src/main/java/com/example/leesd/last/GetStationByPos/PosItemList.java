@@ -4,7 +4,7 @@ package com.example.leesd.last.GetStationByPos;
  * Created by leesd on 2018-04-08.
  */
 
-public class ItemList {
+public class PosItemList {
     private String gpsX;
 
     private String posY;

@@ -6,14 +6,14 @@ package com.example.leesd.last.GetStationByPos;
 
 public class MsgBody
 {
-    private ItemList[] itemList;
+    private PosItemList[] itemList;
 
-    public ItemList[] getItemList ()
+    public PosItemList[] getItemList ()
     {
         return itemList;
     }
 
-    public void setItemList (ItemList[] itemList)
+    public void setItemList (PosItemList[] itemList)
     {
         this.itemList = itemList;
     }

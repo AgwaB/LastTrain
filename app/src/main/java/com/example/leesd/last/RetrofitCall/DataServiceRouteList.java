@@ -24,7 +24,7 @@ public interface DataServiceRouteList { // 도착 정보
 
     // category is setting of result format whether many places in rough or one place in detail.
     // options are query values for GET request
-    Call<RouteListMainInfo> DataPos(
+    Call<String> DataPos(
             @QueryMap Map<String, String> options
     );
 

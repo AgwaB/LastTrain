@@ -4,7 +4,6 @@ import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -13,21 +12,26 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import com.example.leesd.last.GetArrInfoByRouteList.RouteListMainInfo;
+import com.example.leesd.last.GetRouteByStationList.StationItemList;
 import com.example.leesd.last.GetRouteByStationList.StationListMainInfo;
 import com.example.leesd.last.GetStaionByRoute.RouteMainInfo;
-import com.example.leesd.last.GetStationByPos.PosMainInfo;
+import com.example.leesd.last.GetStationByPos.PosItemList;
 import com.example.leesd.last.RetrofitCall.AsyncResponseMaps;
 import com.example.leesd.last.RetrofitCall.DataServicePos;
 import com.example.leesd.last.RetrofitCall.DataServicePosNetworkCall;
+import com.example.leesd.last.RetrofitCall.DataServiceRouteList;
+import com.example.leesd.last.RetrofitCall.DataServiceStationList;
 import com.example.leesd.last.RetrofitCall.GoogleMapsNetworkCall;
 import com.example.leesd.last.RetrofitCall.GooglePlaceService;
 import com.example.leesd.last.googlemaps.JsonMaps;
 
+import org.xmlpull.v1.XmlPullParserException;
+
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.concurrent.ExecutionException;
 
 import retrofit2.Call;
 import retrofit2.Response;
@@ -46,6 +50,9 @@ public class NearbyActivity extends AppCompatActivity implements AsyncResponseMa
     private LocationManager lm;
     private Handler mHandler;
     int check = 0; //check network count
+
+    ArrayList<PosItemList> posItemLists = new ArrayList<PosItemList>();
+    ArrayList<StationItemList> stationItemLists = new ArrayList<StationItemList>();
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -190,7 +197,30 @@ public class NearbyActivity extends AppCompatActivity implements AsyncResponseMa
         DataServicePos dataServicePos = DataServicePos.dataService.create(DataServicePos.class);
 
         // call GET request with category and HashMap params
-        final Call<PosMainInfo> call = dataServicePos.DataPos(searchParams);
+        final Call<String> call = dataServicePos.DataPos(searchParams);
+
+        // make a thread for http communication
+        DataServicePosNetworkCall n = new DataServicePosNetworkCall();
+
+        // set delegate for receiving response object
+        n.delegate = NearbyActivity.this;
+
+        // execute background service
+
+        n.execute(call);
+    }
+
+    public void getBusStationData(int arsId){
+        searchParams = new HashMap<String, String>();
+
+        searchParams.put("serviceKey", getString(R.string.busDataKey));
+        searchParams.put("arsId",Integer.toString(arsId));
+
+        // build retrofit object
+        DataServiceStationList dataServiceStationList = DataServiceStationList.dataService.create(DataServiceStationList.class);
+
+        // call GET request with category and HashMap params
+        final Call<String> call = dataServiceStationList.DataPos(searchParams);
 
         // make a thread for http communication
         DataServicePosNetworkCall n = new DataServicePosNetworkCall();
@@ -203,23 +233,41 @@ public class NearbyActivity extends AppCompatActivity implements AsyncResponseMa
         n.execute(call);
     }
     @Override
-    public void PosProcessFinish(Response<PosMainInfo> response) {
-        Log.d("위치", response.body().getServiceResult().toString());
+    public void PosProcessFinish(Response<String> response) {
+        Log.d("위치", response.body().toString());
+        try {
+            XMLparserPos xmLparserPos = new XMLparserPos(response.body().toString());
+            posItemLists = xmLparserPos.getPosData();
+        } catch (XmlPullParserException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+//        getBusStationData();
     }
 
     @Override
-    public void RouteProcessFinish(Response<RouteMainInfo> response) {
+    public void RouteProcessFinish(Response<String> response) {
 
     }
 
     @Override
-    public void RouteListProcessFinish(Response<RouteListMainInfo> response) {
+    public void RouteListProcessFinish(Response<String> response) {
 
     }
 
     @Override
-    public void StationListProcessFinish(Response<StationListMainInfo> response) {
-
+    public void StationListProcessFinish(Response<String> response) {
+        Log.d("위치2", response.body().toString());
+        try {
+            XMLparserStationList xmLparserStationList = new XMLparserStationList(response.body().toString());
+            stationItemLists = xmLparserStationList.getPosData();
+        } catch (XmlPullParserException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

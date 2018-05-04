@@ -4,7 +4,7 @@ package com.example.leesd.last.GetRouteByStationList;
  * Created by leesd on 2018-04-08.
  */
 
-public class StationItemList {
+public class RouteItemList {
     private String busRouteId;
 
     private String busRouteType;

@@ -4,7 +4,7 @@ package com.example.leesd.last.GetArrInfoByRouteList;
  * Created by leesd on 2018-04-08.
  */
 
-public class ItemList {
+public class ArrInfoItemList {
     private String nmainSec1;
 
     private String reride_Num1;

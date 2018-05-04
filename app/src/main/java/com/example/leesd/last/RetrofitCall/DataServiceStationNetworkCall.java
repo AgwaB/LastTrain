@@ -13,7 +13,7 @@ import retrofit2.Response;
  * Created by leesd on 2018-04-08.
  */
 
-public class StationListNetworkCall extends AsyncTask<Call, Void, Response<String>> {
+public class DataServiceStationNetworkCall extends AsyncTask<Call, Void, Response<String>> {
     public AsyncResponseMaps delegate = null;
     @Override
     protected Response<String> doInBackground(Call... params){
@@ -39,6 +39,6 @@ public class StationListNetworkCall extends AsyncTask<Call, Void, Response<Strin
         // call if doInBackground returns response or null
 
         // send a response object to activity
-        delegate.StationListProcessFinish(response);
+        delegate.StationProcessFinish(response);
     }
 }

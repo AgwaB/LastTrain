@@ -13,16 +13,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.leesd.last.GetArrInfoByRouteList.RouteListMainInfo;
-import com.example.leesd.last.GetRouteByStationList.StationItemList;
-import com.example.leesd.last.GetRouteByStationList.StationListMainInfo;
-import com.example.leesd.last.GetStaionByRoute.RouteMainInfo;
+import com.example.leesd.last.GetArrInfoByRouteList.ArrInfoItemList;
+import com.example.leesd.last.GetRouteByStationList.RouteItemList;
+import com.example.leesd.last.GetStaionByRoute.StationItemList;
 import com.example.leesd.last.GetStationByPos.PosItemList;
 import com.example.leesd.last.RetrofitCall.AsyncResponseMaps;
 import com.example.leesd.last.RetrofitCall.DataServicePos;
 import com.example.leesd.last.RetrofitCall.DataServicePosNetworkCall;
-import com.example.leesd.last.RetrofitCall.DataServiceRouteList;
-import com.example.leesd.last.RetrofitCall.DataServiceStationList;
+import com.example.leesd.last.RetrofitCall.DataServiceRoute;
+import com.example.leesd.last.RetrofitCall.DataServiceStation;
+import com.example.leesd.last.RetrofitCall.DataServiceStationNetworkCall;
 import com.example.leesd.last.RetrofitCall.GoogleMapsNetworkCall;
 import com.example.leesd.last.RetrofitCall.GooglePlaceService;
 import com.example.leesd.last.googlemaps.JsonMaps;
@@ -52,7 +52,11 @@ public class NearbyActivity extends AppCompatActivity implements AsyncResponseMa
     int check = 0; //check network count
 
     ArrayList<PosItemList> posItemLists = new ArrayList<PosItemList>();
+    ArrayList<RouteItemList> routeItemLists = new ArrayList<RouteItemList>();
+    ArrayList<ArrayList<RouteItemList>> routeItemListsPack = new ArrayList<ArrayList<RouteItemList>>();
     ArrayList<StationItemList> stationItemLists = new ArrayList<StationItemList>();
+    ArrayList<ArrayList<StationItemList>> stationItemListPack = new ArrayList<ArrayList<StationItemList>>();
+    ArrayList<ArrInfoItemList> arrInfoItemLists = new ArrayList<ArrInfoItemList>();
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -210,6 +214,29 @@ public class NearbyActivity extends AppCompatActivity implements AsyncResponseMa
         n.execute(call);
     }
 
+    public void getBusRouteData(int arsId){
+        searchParams = new HashMap<String, String>();
+
+        searchParams.put("serviceKey", getString(R.string.busDataKey));
+        searchParams.put("arsId",Integer.toString(arsId));
+
+        // build retrofit object
+        DataServiceStation dataServiceStation = DataServiceStation.dataService.create(DataServiceStation.class);
+
+        // call GET request with category and HashMap params
+        final Call<String> call = dataServiceStation.DataPos(searchParams);
+
+        // make a thread for http communication
+        DataServiceStationNetworkCall n = new DataServiceStationNetworkCall();
+
+        // set delegate for receiving response object
+        n.delegate = NearbyActivity.this;
+
+        // execute background service
+
+        n.execute(call);
+    }
+
     public void getBusStationData(int arsId){
         searchParams = new HashMap<String, String>();
 
@@ -217,7 +244,7 @@ public class NearbyActivity extends AppCompatActivity implements AsyncResponseMa
         searchParams.put("arsId",Integer.toString(arsId));
 
         // build retrofit object
-        DataServiceStationList dataServiceStationList = DataServiceStationList.dataService.create(DataServiceStationList.class);
+        DataServiceRoute dataServiceStationList = DataServiceRoute.dataService.create(DataServiceRoute.class);
 
         // call GET request with category and HashMap params
         final Call<String> call = dataServiceStationList.DataPos(searchParams);
@@ -234,17 +261,25 @@ public class NearbyActivity extends AppCompatActivity implements AsyncResponseMa
     }
     @Override
     public void PosProcessFinish(Response<String> response) {
-        Log.d("위치", response.body().toString());
-        try {
-            XMLparserPos xmLparserPos = new XMLparserPos(response.body().toString());
-            posItemLists = xmLparserPos.getPosData();
-        } catch (XmlPullParserException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        if(response!=null) {
+            Log.d("위치", response.body().toString());
+            try {
+                XMLparserPos xmLparserPos = new XMLparserPos(response.body().toString());
+                posItemLists = xmLparserPos.getPosData();
+            } catch (XmlPullParserException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
-//        getBusStationData();
+            for (PosItemList pos : posItemLists)
+                getBusStationData(Integer.parseInt(pos.getArsId()));
+        }
+    }
+
+    @Override
+    public void RProcessFinish(Response<String> response) {
+
     }
 
     @Override
@@ -253,21 +288,21 @@ public class NearbyActivity extends AppCompatActivity implements AsyncResponseMa
     }
 
     @Override
-    public void RouteListProcessFinish(Response<String> response) {
+    public void StationProcessFinish(Response<String> response) {
+        if(response!=null) {
+            Log.d("위치2", response.body().toString());
+            try {
+                XMLparserStation xmLparserStation = new XMLparserStation(response.body().toString());
+                stationItemLists = xmLparserStation.getStationData();
+            } catch (XmlPullParserException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
-    }
-
-    @Override
-    public void StationListProcessFinish(Response<String> response) {
-        Log.d("위치2", response.body().toString());
-        try {
-            XMLparserStationList xmLparserStationList = new XMLparserStationList(response.body().toString());
-            stationItemLists = xmLparserStationList.getPosData();
-        } catch (XmlPullParserException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+            stationItemListPack.add(stationItemLists);
         }
+
     }
 
 }

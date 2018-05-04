@@ -17,7 +17,7 @@ import retrofit2.http.QueryMap;
  * Created by leesd on 2018-04-08.
  */
 
-public interface DataServiceStationList { // 노선별 경유 정류소 조회 서비스
+public interface DataServiceStation { // 노선별 경유 정류소 조회 서비스
 
     // uri that receives GET request
     @GET("stationinfo/getRouteByStation")

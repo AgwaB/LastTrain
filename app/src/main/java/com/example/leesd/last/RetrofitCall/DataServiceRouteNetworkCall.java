@@ -3,7 +3,7 @@ package com.example.leesd.last.RetrofitCall;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.example.leesd.last.GetStaionByRoute.RouteMainInfo;
+import com.example.leesd.last.GetArrInfoByRouteList.RouteListMainInfo;
 import com.example.leesd.last.GetStationByPos.PosMainInfo;
 
 import retrofit2.Call;

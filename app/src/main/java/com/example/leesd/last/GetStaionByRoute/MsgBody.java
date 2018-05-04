@@ -6,21 +6,21 @@ package com.example.leesd.last.GetStaionByRoute;
 
 public class MsgBody
 {
-    private ItemList[] itemList;
+    private StationItemList[] stationItemList;
 
-    public ItemList[] getItemList ()
+    public StationItemList[] getStationItemList()
     {
-        return itemList;
+        return stationItemList;
     }
 
-    public void setItemList (ItemList[] itemList)
+    public void setStationItemList(StationItemList[] stationItemList)
     {
-        this.itemList = itemList;
+        this.stationItemList = stationItemList;
     }
 
     @Override
     public String toString()
     {
-        return "ClassPojo [itemList = "+itemList+"]";
+        return "ClassPojo [stationItemList = "+ stationItemList +"]";
     }
 }

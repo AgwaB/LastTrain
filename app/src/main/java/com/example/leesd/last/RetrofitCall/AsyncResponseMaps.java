@@ -17,7 +17,7 @@ import retrofit2.Response;
 public interface AsyncResponseMaps {
     void processFinish(Response<JsonMaps> response); // call if Retrofit is finished
     void PosProcessFinish(Response<String> response);
+    void RProcessFinish(Response<String> response);
     void RouteProcessFinish(Response<String> response);
-    void RouteListProcessFinish(Response<String> response);
-    void StationListProcessFinish(Response<String> response);
+    void StationProcessFinish(Response<String> response);
 }

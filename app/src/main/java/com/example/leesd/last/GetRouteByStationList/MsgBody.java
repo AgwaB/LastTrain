@@ -6,14 +6,14 @@ package com.example.leesd.last.GetRouteByStationList;
 
 public class MsgBody
 {
-    private StationItemList[] itemList;
+    private RouteItemList[] itemList;
 
-    public StationItemList[] getItemList ()
+    public RouteItemList[] getItemList ()
     {
         return itemList;
     }
 
-    public void setItemList (StationItemList[] itemList)
+    public void setItemList (RouteItemList[] itemList)
     {
         this.itemList = itemList;
     }

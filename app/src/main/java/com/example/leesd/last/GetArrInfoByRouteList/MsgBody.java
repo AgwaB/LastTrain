@@ -6,21 +6,21 @@ package com.example.leesd.last.GetArrInfoByRouteList;
 
 public class MsgBody
 {
-    private ItemList[] itemList;
+    private ArrInfoItemList[] arrInfoItemList;
 
-    public ItemList[] getItemList ()
+    public ArrInfoItemList[] getArrInfoItemList()
     {
-        return itemList;
+        return arrInfoItemList;
     }
 
-    public void setItemList (ItemList[] itemList)
+    public void setArrInfoItemList(ArrInfoItemList[] arrInfoItemList)
     {
-        this.itemList = itemList;
+        this.arrInfoItemList = arrInfoItemList;
     }
 
     @Override
     public String toString()
     {
-        return "ClassPojo [itemList = "+itemList+"]";
+        return "ClassPojo [arrInfoItemList = "+ arrInfoItemList +"]";
     }
 }

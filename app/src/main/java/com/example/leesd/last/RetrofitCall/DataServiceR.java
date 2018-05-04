@@ -21,7 +21,7 @@ import retrofit2.http.QueryMap;
 public interface DataServiceR {
 
     // uri that receives GET request
-    @GET("busRouteInfo/getStaionByRoute")
+    @GET("busRouteInfo/getArrInfoByRoute")
 
     // category is setting of result format whether many places in rough or one place in detail.
     // options are query values for GET request

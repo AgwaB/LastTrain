@@ -20,7 +20,7 @@ import retrofit2.http.QueryMap;
 public interface DataServiceRoute { // 도착 정보
 
     // uri that receives GET request
-    @GET("arrive/getArrInfoByRoute")
+    @GET("arrive/getRouteByStation")
 
     // category is setting of result format whether many places in rough or one place in detail.
     // options are query values for GET request

@@ -1,4 +1,4 @@
-package com.example.leesd.last;
+package com.example.leesd.last.XMLparser;
 
 import android.util.Log;
 
@@ -37,8 +37,41 @@ public class XMLparserStation {
                 if(tagName.equals("itemList")){ isItemTag = true; itemList = new StationItemList();}
 
             } else if (eventType == XmlPullParser.TEXT && isItemTag){
-                if(tagName.equals("staOrd"))
-                    itemList.setStaOrd(parser.getText());
+                if(tagName.equals("arrmsg1"))
+                    itemList.setArrmsg1(parser.getText());
+
+                if(tagName.equals("arrmsg2"))
+                    itemList.setArrmsg2(parser.getText());
+
+                if(tagName.equals("firstTm"))
+                    itemList.setFirstTm(parser.getText());
+
+                if(tagName.equals("isFullFlag1"))
+                    itemList.setIsFullFlag1(parser.getText());
+
+                if(tagName.equals("isFullFlag2"))
+                    itemList.setIsFullFlag2(parser.getText());
+
+                if(tagName.equals("isLast1"))
+                    itemList.setIsLast1(parser.getText());
+
+                if(tagName.equals("isLast2"))
+                    itemList.setIsLast2(parser.getText());
+
+                if(tagName.equals("lastTm"))
+                    itemList.setLastTm(parser.getText());
+
+                if(tagName.equals("nextBus"))
+                    itemList.setIsFullFlag1(parser.getText());
+
+                if(tagName.equals("nxtStn"))
+                    itemList.setNxtStn(parser.getText());
+
+                if(tagName.equals("rtNm"))
+                    itemList.setRtNm(parser.getText());
+
+                if(tagName.equals("stNm"))
+                    itemList.setStNm(parser.getText());
 
 
             } else if(eventType == XmlPullParser.END_TAG){
@@ -46,42 +79,6 @@ public class XMLparserStation {
                 tagName = parser.getName();
 
                 if(tagName.equals("itemList")){
-
-                    if(tagName.equals("arrmsg1"))
-                        itemList.setArrmsg1(parser.getText());
-
-                    if(tagName.equals("arrmsg2"))
-                        itemList.setArrmsg2(parser.getText());
-
-                    if(tagName.equals("fisrtTm"))
-                        itemList.setFirstTm(parser.getText());
-
-                    if(tagName.equals("isFullFlag1"))
-                        itemList.setIsFullFlag1(parser.getText());
-
-                    if(tagName.equals("isFullFlag2"))
-                        itemList.setIsFullFlag2(parser.getText());
-
-                    if(tagName.equals("isLast1"))
-                        itemList.setIsLast1(parser.getText());
-
-                    if(tagName.equals("isLast2"))
-                        itemList.setIsLast2(parser.getText());
-
-                    if(tagName.equals("lastTm"))
-                        itemList.setLastTm(parser.getText());
-
-                    if(tagName.equals("nextBus"))
-                        itemList.setIsFullFlag1(parser.getText());
-
-                    if(tagName.equals("nxtStn"))
-                        itemList.setNxtStn(parser.getText());
-
-                    if(tagName.equals("rtNm"))
-                        itemList.setRtNm(parser.getText());
-
-                    if(tagName.equals("stNm"))
-                        itemList.setStNm(parser.getText());
                     // 파싱한 데이터 사용 or 저장
                     station.add(itemList);
 
@@ -94,7 +91,7 @@ public class XMLparserStation {
 
         }
         for(int i = 0 ; i < station.size() ; i++)
-            Log.d("StationData", station.get(i).getBusRouteId().toString());
+            Log.d("StationData", station.get(i).getRtNm());
 
     }
 

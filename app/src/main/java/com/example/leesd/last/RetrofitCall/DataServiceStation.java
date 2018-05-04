@@ -20,7 +20,7 @@ import retrofit2.http.QueryMap;
 public interface DataServiceStation { // 노선별 경유 정류소 조회 서비스
 
     // uri that receives GET request
-    @GET("stationinfo/getRouteByStation")
+    @GET("stationinfo/getStationByUid")
 
     // category is setting of result format whether many places in rough or one place in detail.
     // options are query values for GET request

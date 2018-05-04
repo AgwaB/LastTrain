@@ -1,4 +1,4 @@
-package com.example.leesd.last;
+package com.example.leesd.last.XMLparser;
 
 import android.util.Log;
 

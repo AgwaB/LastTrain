@@ -20,11 +20,12 @@ import com.example.leesd.last.GetStationByPos.PosItemList;
 import com.example.leesd.last.RetrofitCall.AsyncResponseMaps;
 import com.example.leesd.last.RetrofitCall.DataServicePos;
 import com.example.leesd.last.RetrofitCall.DataServicePosNetworkCall;
-import com.example.leesd.last.RetrofitCall.DataServiceRoute;
 import com.example.leesd.last.RetrofitCall.DataServiceStation;
 import com.example.leesd.last.RetrofitCall.DataServiceStationNetworkCall;
 import com.example.leesd.last.RetrofitCall.GoogleMapsNetworkCall;
 import com.example.leesd.last.RetrofitCall.GooglePlaceService;
+import com.example.leesd.last.XMLparser.XMLparserPos;
+import com.example.leesd.last.XMLparser.XMLparserStation;
 import com.example.leesd.last.googlemaps.JsonMaps;
 
 import org.xmlpull.v1.XmlPullParserException;
@@ -75,7 +76,7 @@ public class NearbyActivity extends AppCompatActivity implements AsyncResponseMa
                 Log.d("latitude", String.valueOf(latitude));
                 if(longitude != 0 && latitude != 0) {
                     check = 0;
-                    getBusPosData(latitude, longitude);
+                    getBusPosData(126.9488621, 37.5029153);
 //                    getData("bus_station", bus);
 //                    getData("subway_station", subway);
                     longitude = 0;
@@ -189,12 +190,12 @@ public class NearbyActivity extends AppCompatActivity implements AsyncResponseMa
     }
 
 
-    public void getBusPosData(double latitude, double longitude){
+    public void getBusPosData(double longitude, double latitude){
         searchParams = new HashMap<String, String>();
 
         searchParams.put("serviceKey", getString(R.string.busDataKey));
-        searchParams.put("tmX","126.9489597"); // Double.toString(latitude); 이런식으로하면 안됨. 값 확인 요망
-        searchParams.put("tmY", "37.503057");
+        searchParams.put("tmX", Double.toString(longitude));
+        searchParams.put("tmY", Double.toString(latitude));
         searchParams.put("radius", "500");
 
         // build retrofit object
@@ -244,13 +245,13 @@ public class NearbyActivity extends AppCompatActivity implements AsyncResponseMa
         searchParams.put("arsId",Integer.toString(arsId));
 
         // build retrofit object
-        DataServiceRoute dataServiceStationList = DataServiceRoute.dataService.create(DataServiceRoute.class);
+        DataServiceStation dataServiceStation = DataServiceStation.dataService.create(DataServiceStation.class);
 
         // call GET request with category and HashMap params
-        final Call<String> call = dataServiceStationList.DataPos(searchParams);
+        final Call<String> call = dataServiceStation.DataPos(searchParams);
 
         // make a thread for http communication
-        DataServicePosNetworkCall n = new DataServicePosNetworkCall();
+        DataServiceStationNetworkCall n = new DataServiceStationNetworkCall();
 
         // set delegate for receiving response object
         n.delegate = NearbyActivity.this;

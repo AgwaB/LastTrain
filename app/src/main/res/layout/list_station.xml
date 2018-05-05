@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    
+    <TextView
+        android:id="@+id/IDstationName"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center_vertical"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:text="정류장"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="120dp"
+            android:layout_height="20dp"
+            android:text="현재 위치와의 거리 : "/>
+
+        <TextView
+            android:id="@+id/IDdistance"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:text="120M"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="120dp"
+            android:layout_height="20dp"
+            android:text="정차 노선 : "/>
+
+        <TextView
+            android:id="@+id/IDstopLine"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:text="120M"/>
+    </LinearLayout>
+    
+
+</LinearLayout>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/IDlineName"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center_vertical"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:text="노선"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="55dp"
+            android:layout_height="20dp"
+            android:text="다음 차 : "/>
+
+        <TextView
+            android:id="@+id/IDnextBus"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:text="00분 후"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="65dp"
+            android:layout_height="20dp"
+            android:text="다다음 차 : "/>
+
+        <TextView
+            android:id="@+id/IDandNextLine"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:text="00분 후"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="20dp"
+            android:text="인근 정류장 : "/>
+
+        <TextView
+            android:id="@+id/IDnearby"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:text="00분 후"/>
+    </LinearLayout>
+
+
+
+</LinearLayout>

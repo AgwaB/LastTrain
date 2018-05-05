@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.leesd.last.GetArrInfoByRouteList.ArrInfoItemList;
@@ -42,10 +43,15 @@ import retrofit2.Response;
  */
 
 public class NearbyActivity extends AppCompatActivity implements AsyncResponseMaps {
+    private ListView listView;
+    private DetailLineListViewAdapter detailLineListViewAdapter;
+    private LineListViewAdapter lineListViewAdapter;
+    private StationListViewAdapter stationListViewAdapter;
+
     private JsonMaps bus, subway;
     private HashMap<String, String> searchParams;
     private TextView textView, textView2;
-    private Button button, button2;
+    private Button button, button2, button3;
     double longitude = 0;
     double latitude = 0;
     private LocationManager lm;
@@ -67,7 +73,14 @@ public class NearbyActivity extends AppCompatActivity implements AsyncResponseMa
         textView2 = (TextView)findViewById(R.id.text2);
         button = (Button)findViewById(R.id.getData);
         button2 = (Button)findViewById(R.id.getLocation);
+        button3 = (Button)findViewById(R.id.change);
+
         mHandler = new Handler();
+        listView = (ListView)findViewById(R.id.listview);
+        stationListViewAdapter = new StationListViewAdapter();
+        lineListViewAdapter = new LineListViewAdapter();
+        detailLineListViewAdapter = new DetailLineListViewAdapter();
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -82,6 +95,13 @@ public class NearbyActivity extends AppCompatActivity implements AsyncResponseMa
                     longitude = 0;
                     latitude = 0;
                 }
+            }
+        });
+
+        button3.setOnClickListener(new View.OnClickListener() { // 임시 메소드, 나중에 정류장 / 노선 정보 change 용으로 쓸거임
+            @Override
+            public void onClick(View v) {
+                setLineListView(stationItemListPack);
             }
         });
 
@@ -143,6 +163,25 @@ public class NearbyActivity extends AppCompatActivity implements AsyncResponseMa
                 }
     };
 
+    public void setStationListView(ArrayList<ArrayList<StationItemList>> pack){ // 정류장 정보를 가져와서 listview로 뿌린다.
+        stationListViewAdapter.notifyDataSetChanged();
+
+        for(int i = 0 ; i < pack.size() ; i++)
+            for(int j = 0 ; j < pack.get(i).size() ; j++)
+           stationListViewAdapter.addItem(pack.get(i).get(j).getStNm(), "거리", "정차 노선");
+
+        listView.setAdapter(stationListViewAdapter);
+    }
+
+    public void setLineListView(ArrayList<ArrayList<StationItemList>> pack){ // 노선 정보를 가져와서 listview로 뿌린다.
+        lineListViewAdapter.notifyDataSetChanged();
+
+        for(int i = 0 ; i < pack.size() ; i++)
+            for(int j = 0 ; j < pack.get(i).size() ; j++)
+                lineListViewAdapter.addItem(pack.get(i).get(j).getRtNm(), pack.get(i).get(j).getArrmsg1(), pack.get(i).get(j).getArrmsg2(), pack.get(i).get(j).getStNm());
+
+        listView.setAdapter(lineListViewAdapter);
+    }
     public void getData(String type, JsonMaps jsonMaps){
         // add params to HashMap
         searchParams = new HashMap<String, String>();
